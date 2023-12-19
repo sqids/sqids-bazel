@@ -1,0 +1,26 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@buildifier_prebuilt//:rules.bzl", "buildifier", "buildifier_test")
+
+bzl_library(
+    name = "defs",
+    srcs = ["defs.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["//lib:sqids"],
+)
+
+buildifier(
+    name = "format",
+    exclude_patterns = [
+        "./.git/*",
+    ],
+    lint_mode = "fix",
+    mode = "fix",
+)
+
+buildifier_test(
+    name = "buildifier_test",
+    lint_mode = "warn",
+    mode = "check",
+    no_sandbox = True,
+    workspace = "//:WORKSPACE",
+)

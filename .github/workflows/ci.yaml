@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      XDG_CACHE_HOME: ~/.cache/bazel-repo
+    strategy:
+      matrix:
+        bazelversion:
+          - 6.4.0
+          - 7.0.0
+        folder:
+          - "."
+          - "e2e"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mount bazel caches
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/bazel
+            ~/.cache/bazel-repo
+          key: bazel-cache-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', 'WORKSPACE') }}
+          restore-keys: bazel-cache-
+      - name: Tests
+        working-directory: ${{ matrix.folder }}
+        run: >
+          USE_BAZEL_VERSION="${{ matrix.bazelversion }}"
+          bazel
+          --bazelrc=${{ github.workspace }}/.bazelrc
+          --bazelrc=${{ github.workspace }}/.github/workflows/ci.bazelrc
+          test //...

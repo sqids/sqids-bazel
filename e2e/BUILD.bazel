@@ -1,0 +1,19 @@
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("@sqids_bazel//:defs.bzl", "sqids")
+
+hash = sqids().encode([
+    1,
+    2,
+    3,
+])
+
+genrule(
+    name = "file",
+    outs = ["test-%s" % hash],
+    cmd = "echo '%s' > $(OUTS)" % hash,
+)
+
+build_test(
+    name = "test",
+    targets = [":file"],
+)
