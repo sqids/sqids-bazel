@@ -1,5 +1,7 @@
 # [Sqids Bazel](https://sqids.org/bazel)
 
+[![Github Actions](https://img.shields.io/github/actions/workflow/status/sqids/sqids-bazel/ci.yml)](https://github.com/sqids/sqids-bazel/actions)
+
 [Sqids](https://sqids.org/bazel) (*pronounced "squids"*) is a small library that lets you **generate unique IDs from numbers**. It's good for link shortening, fast & URL-safe ID generation and decoding back into numbers for quicker database lookups.
 
 Features:
