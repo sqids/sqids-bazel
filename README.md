@@ -29,8 +29,22 @@ Not good for:
 
 ## 🚀 Getting started
 
+In a `MODULE.bazel` file define as a new dependency:
+
 ```starlark
-@TODO
+bazel_dep(name = "sqids_bazel")
+
+git_override(
+    module_name = "sqids_bazel",
+    remote = "https://github.com/sqids/sqids-bazel",
+    commit = "<commit_hash>",
+)
+```
+
+Load from the module:
+
+```starlark
+load("@sqids_bazel//:defs.bzl", "encode", "decode")
 ```
 
 ## 👩‍💻 Examples
@@ -38,7 +52,8 @@ Not good for:
 Simple encode & decode:
 
 ```starlark
-@TODO
+id = encode([1, 2, 3]) # "86Rf07"
+numbers = decode(id) # [1, 2, 3]
 ```
 
 > **Note**
@@ -47,19 +62,23 @@ Simple encode & decode:
 Enforce a *minimum* length for IDs:
 
 ```starlark
-@TODO
+id = encode([1, 2, 3], min_length = 10) # "86Rf07xd4z"
+numbers = decode(id) # [1, 2, 3]
 ```
 
 Randomize IDs by providing a custom alphabet:
 
 ```starlark
-@TODO
+alphabet = "FxnXM1kBN6cuhsAvjW3Co7l2RePyY8DwaU04Tzt9fHQrqSVKdpimLGIJOgb5ZE"
+id = encode([1, 2, 3], alphabet) # "B4aajs"
+numbers = decode(id, alphabet) # [1, 2, 3]
 ```
 
 Prevent specific words from appearing anywhere in the auto-generated IDs:
 
 ```starlark
-@TODO
+id = encode([1, 2, 3], blocklist = ["86Rf07"])
+numbers = decode(id) # [1, 2, 3]
 ```
 
 ## 📝 License
