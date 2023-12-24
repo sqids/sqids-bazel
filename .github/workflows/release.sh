@@ -16,7 +16,7 @@
 set -o errexit -o nounset -o pipefail
 
 NAME=sqids-bazel
-TAG=${1}
+TAG=${GITHUB_REF_NAME}
 VERSION=${TAG:1}
 PREFIX="${NAME}-${VERSION}"
 ARCHIVE="${NAME}-${TAG}.tar.gz"

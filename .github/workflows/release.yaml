@@ -30,7 +30,7 @@ jobs:
           --bazelrc=${{ github.workspace }}/.github/workflows/ci.bazelrc
           test //...
       - name: Create Artifact
-        run: .github/workflows/release.sh ${{ env.GITHUB_REF_NAME }}
+        run: .github/workflows/release.sh
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
