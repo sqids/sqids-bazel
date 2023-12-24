@@ -23,7 +23,11 @@ jobs:
           key: bazel-cache-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', 'WORKSPACE') }}
           restore-keys: bazel-cache-
       - name: Lint
-        run: bazel test //tools:lint
+        run: >
+          bazel
+          --bazelrc=${{ github.workspace }}/.bazelrc
+          --bazelrc=${{ github.workspace }}/.github/workflows/ci.bazelrc
+          test //tools:lint
 
   test:
     runs-on: ubuntu-latest
