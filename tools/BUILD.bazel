@@ -1,0 +1,19 @@
+load("@buildifier_prebuilt//:rules.bzl", "buildifier", "buildifier_test")
+
+buildifier(
+    name = "format",
+    exclude_patterns = [
+        "./.git/*",
+    ],
+    lint_mode = "fix",
+    mode = "fix",
+)
+
+buildifier_test(
+    name = "lint",
+    lint_mode = "warn",
+    mode = "check",
+    no_sandbox = True,
+    tags = ["manual"],
+    workspace = "//:WORKSPACE",
+)

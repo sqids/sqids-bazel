@@ -1,5 +1,9 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("@buildifier_prebuilt//:rules.bzl", "buildifier", "buildifier_test")
+
+exports_files(
+    ["WORKSPACE"],
+    visibility = ["//:__subpackages__"],
+)
 
 bzl_library(
     name = "defs",
@@ -13,22 +17,4 @@ bzl_library(
     srcs = ["deps.bzl"],
     visibility = ["//visibility:public"],
     deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
-)
-
-buildifier(
-    name = "format",
-    exclude_patterns = [
-        "./.git/*",
-    ],
-    lint_mode = "fix",
-    mode = "fix",
-)
-
-buildifier_test(
-    name = "lint",
-    lint_mode = "warn",
-    mode = "check",
-    no_sandbox = True,
-    tags = ["manual"],
-    workspace = "//:WORKSPACE",
 )
