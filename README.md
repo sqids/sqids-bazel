@@ -29,17 +29,7 @@ Not good for:
 
 ## 🚀 Getting started
 
-In a `MODULE.bazel` file define as a new dependency:
-
-```starlark
-bazel_dep(name = "sqids_bazel")
-
-git_override(
-    module_name = "sqids_bazel",
-    remote = "https://github.com/sqids/sqids-bazel",
-    commit = "<commit_hash>",
-)
-```
+Head over to the [Releases](https://github.com/sqids/sqids-bazel/releases) to pick a version and read the install instructions.
 
 Load from the module:
 
