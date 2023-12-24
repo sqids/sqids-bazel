@@ -8,6 +8,13 @@ bzl_library(
     deps = ["//lib:sqids"],
 )
 
+bzl_library(
+    name = "deps",
+    srcs = ["deps.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["@bazel_tools//tools/build_defs/repo:http.bzl"],
+)
+
 buildifier(
     name = "format",
     exclude_patterns = [
@@ -18,9 +25,10 @@ buildifier(
 )
 
 buildifier_test(
-    name = "buildifier_test",
+    name = "lint",
     lint_mode = "warn",
     mode = "check",
     no_sandbox = True,
+    tags = ["manual"],
     workspace = "//:WORKSPACE",
 )

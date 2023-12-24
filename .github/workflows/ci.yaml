@@ -20,6 +20,9 @@ jobs:
         folder:
           - "."
           - "e2e"
+        bzlmod:
+          - "--enable_bzlmod"
+          - "--noenable_bzlmod"
     steps:
       - uses: actions/checkout@v4
       - name: Mount bazel caches
@@ -37,4 +40,4 @@ jobs:
           bazel
           --bazelrc=${{ github.workspace }}/.bazelrc
           --bazelrc=${{ github.workspace }}/.github/workflows/ci.bazelrc
-          test //...
+          test ${{ matrix.bzlmod }} //...

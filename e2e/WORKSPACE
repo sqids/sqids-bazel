@@ -1,0 +1,10 @@
+workspace(name = "sqids_bazel_e2e")
+
+local_repository(
+    name = "sqids_bazel",
+    path = "..",
+)
+
+load("@sqids_bazel//:deps.bzl", "sqids_bazel_dependencies")
+
+sqids_bazel_dependencies()
