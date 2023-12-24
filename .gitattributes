@@ -1,0 +1,7 @@
+# Configuration for `git archive` used in .github/workflows/release.sh
+.bazel*       export-ignore
+.github       export-ignore
+.gitignore    export-ignore
+e2e           export-ignore
+lib/tests     export-ignore
+tools         export-ignore

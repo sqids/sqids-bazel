@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      XDG_CACHE_HOME: ~/.cache/bazel-repo
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mount bazel caches
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/bazel
+            ~/.cache/bazel-repo
+          key: bazel-cache-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', 'WORKSPACE') }}
+          restore-keys: bazel-cache-
+      - name: Test
+        run: >
+          bazel
+          --bazelrc=${{ github.workspace }}/.bazelrc
+          --bazelrc=${{ github.workspace }}/.github/workflows/ci.bazelrc
+          test //...
+      - name: Create Artifact
+        run: .github/workflows/release.sh ${{ env.GITHUB_REF_NAME }}
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          files: |
+            sqids-bazel-*.tar.gz
+          body_path: release.md
+          fail_on_unmatched_files: true
