@@ -34,7 +34,7 @@ bazel_dep(name = "sqids_bazel", version = "${VERSION}")
 
 ## Use with \`WORKSPACE\`
 
-In you \`WORKSPACE\` file, paste:
+In your \`WORKSPACE\` file, paste:
 
 \`\`\`starlark
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
